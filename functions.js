@@ -54,10 +54,10 @@
       // very wide, but not very tall
       this.font = '900 ' + this.textSize + 'px "Orbitron"';
       this.context.font = this.font;
-      this.text = "RESIST";
+      this.text = "STRP";
       this.textWidth = (this.context.measureText(this.text)).width;
 
-      this.fps = 60;
+      this.fps = 40;
 
       this.channel = 0; // 0 = red, 1 = green, 2 = blue
       this.compOp = 'lighter'; // CompositeOperation = lighter || darker || xor
@@ -78,10 +78,10 @@
       current.add(this, 'phase', 0, 1).listen();
       current.add(this, 'amplitude', 0, 5).listen();
       // comment out below to hide ability to change text string
-      var text = controls.add(this, 'text');
-      text.onChange((function (){
-        this.textWidth = (this.context.measureText(this.text)).width;
-      }).bind(this));
+      // var text = controls.add(this, 'text');
+      // text.onChange((function (){
+      //   this.textWidth = (this.context.measureText(this.text)).width;
+      // }).bind(this));
       // comment out above to hide ability to change text string
       controls.add(this, 'fps', 1, 60);
       controls.add(this, 'phaseStep', 0, 1);
