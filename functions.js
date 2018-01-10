@@ -1,7 +1,7 @@
-function main() {
-          // hier komt je code
-}
+(function (){
+  "use strict";
+  var textSize = 10;
+  var glitcher = {
 
 window.onload = function() {
-       main();
 };
