@@ -42,3 +42,11 @@ canvas {
 h1 {
      color: white;
 }
+
+.overlap {
+     position: absolute;
+     width: 80vw;
+     height: 80vh;
+     background: black;
+
+}
