@@ -1,30 +1,21 @@
-/* Based off of work on http://retromodular.com/ */
-/*·····················································
-···· Paul Reny ········································
-····················· ██ ██ ██ ██ ██ ·· ██ ██ ·········
-··············· ██ ██ ▒▒ ░░ ░░ ░░ ░░ ██ ▒▒ ░░ ██ ······
-············ ██ ▒▒ ░░ ░░ ██ ░░ ██ ░░ ░░ ██ ░░ ░░ ██ ···
-········· ██ ▒▒ ░░ ░░ ░░ ██ ░░ ██ ░░ ░░ ░░ ▒▒ ░░ ██ ···
-········· ██ ░░ ░░ ░░ ░░ ██ ░░ ██ ░░ ░░ ░░ ▒▒ ▒▒ ██ ···
-······ ██ ░░ ░░ ░░ ▒▒ ▒▒ ░░ ░░ ░░ ▒▒ ▒▒ ░░ ░░ ▒▒ ██ ···
-··· ██ ▒▒ ░░ ░░ ░░ ░░ ░░ ░░ ██ ░░ ░░ ░░ ░░ ░░ ░░ ██ ···
-··· ██ ░░ ░░ ▒▒ ░░ ░░ ░░ ░░ ██ ░░ ░░ ░░ ░░ ░░ ▒▒ ██ ···
-··· ██ ░░ ░░ ▒▒ ░░ ░░ ░░ ░░ ░░ ░░ ░░ ░░ ░░ ░░ ██ ······
-······ ██ ██ ██ ░░ ░░ ░░ ░░ ░░ ░░ ░░ ░░ ░░ ▒▒ ██ ······
-··· ██ ▒▒ ▒▒ ▒▒ ██ ░░ ░░ ░░ ░░ ░░ ░░ ░░ ░░ ▒▒ ██ ······
-··· ██ ▒▒ ▒▒ ▒▒ ▒▒ ██ ░░ ░░ ░░ ░░ ░░ ░░ ▒▒ ██ ·········
-··· ██ ▒▒ ▒▒ ▒▒ ▒▒ ██ ░░ ░░ ░░ ░░ ░░ ▒▒ ██ ██ ·········
-······ ██ ▒▒ ▒▒ ▒▒ ▒▒ ██ ▒▒ ▒▒ ▒▒ ██ ██ ▒▒ ▒▒ ██ ······
-········· ██ ▒▒ ▒▒ ██ ██ ██ ██ ██ ▒▒ ▒▒ ▒▒ ▒▒ ▒▒ ██ ···
-············ ██ ██ ██ ········ ██ ██ ██ ██ ██ ██ ······
-·····················································*/
-/* added dynamic sizing to the text. as long as it's */
-/* not too long of string, should always be visible */
-/* Controls info: https://code.google.com/p/dat-gui/ */
-/* dat.gui.js ==> https://cdnjs.cloudflare.com/ajax/libs/dat-gui/0.5/dat.gui.min.js */
-
-(function() {
+(function STRP() {
     "use strict";
+
+    var textTimer = 0;
+    var texts = ["STRP", "Biënnale", "van 22/03/2019", "tot 31/03/2019"];
+    var nextTime = 0;
+    var duration = 3000;
+
+    // requestAnimationFrame(animate);
+    //
+    // function animate(time) {
+    //      if (time < nextTime) {
+    //           requestAnimationFrame(animate);
+    //           return;
+    //      }
+    //      nextTime += duration;
+    // }
+
     var textSize = 10;
     var glitcher = {
 
@@ -45,6 +36,7 @@
                 controls = gui.addFolder('Controls');
             this.width = document.documentElement.offsetWidth;
             this.height = document.documentElement.offsetHeight;
+            // this.height = 1000;
 
             this.textSize = Math.floor(this.width / 7);
             // sets text size based on window size
@@ -55,7 +47,26 @@
             // very wide, but not very tall
             this.font = '900 ' + this.textSize + 'px "Helvetica"';
             this.context.font = this.font;
-            this.text = "STRP";
+
+            requestAnimationFrame(animate);
+
+            function animate(time) {
+                if (time < nextTime) {
+                     requestAnimationFrame(animate);
+                     return;
+                }
+                nextTime += duration;
+                glitcher.text = texts[textTimer];
+                textTimer++;
+                if (textTimer < texts.length) {
+                     requestAnimationFrame(animate);
+                }
+
+                if (textTimer === 3) {
+                     textTimer = 0;
+                }
+           }
+
             this.textWidth = (this.context.measureText(this.text)).width;
 
             this.fps = 40;
@@ -177,6 +188,10 @@
             this.width = document.documentElement.offsetWidth;
             //this.height = window.innerHeight;
             this.height = document.documentElement.offsetHeight;
+
+            // this.canvas.width = window.innerWidth;
+            // this.canvas.height = window.innerHeight;
+
             if (this.canvas) {
                 this.canvas.height = this.height;
                 //document.documentElement.offsetHeight;
@@ -192,6 +207,8 @@
                 this.font = '900 ' + this.textSize + 'px "Helvetica"';
                 this.context.font = this.font;
             }
+
+
         }
     };
 
@@ -200,3 +217,137 @@
     // return;
     // executes anonymous function onload
 })();
+
+
+
+
+
+
+// var activities = [
+//      function() {STRP();},
+//      function() {biennale();},
+//      function() {datum1();},
+//      function() {datum2();},
+// ];
+//
+// var currentActivity = 0;
+//
+// function startActivity() {
+//      console.log(activities[currentActivity]);
+//      activities[currentActivity]();
+//      var duration = 5;
+//      var timer = setInterval(function() {
+//           duration--;
+//           if (!duration) {
+//                currentActivity = (currentActivity + 1) % activities.length;
+//                clearInterval(timer);
+//                startActivity();
+//           }
+//      }, 1000);
+// }
+//
+// startActivity();
+
+// STRP();
+
+
+// function timer1(){
+//      setInterval(function() {
+//           STRP();
+//      }, 3000);
+// }
+//
+// function timer2(){
+//      setInterval(function() {
+//           biennale();
+//      }, 3000);
+// }
+
+
+
+// var counter = 0;
+//
+// function Toggle1() {
+//     STRP();
+// }
+//
+// function Toggle2() {
+//     biennale();
+// }
+//
+// function Toggle3() {
+//     datum1();
+// }
+//
+// function Toggle4() {
+//     datum2();
+// }
+//
+//
+// function TimeMachine() {
+//     switch (counter) {
+//         case 0:
+//             Toggle1();
+//             counter++;
+//             break;
+//
+//         case 1:
+//             Toggle2();
+//             counter++;
+//             break;
+//
+//        case 2:
+//           Toggle3();
+//           counter++;
+//           break;
+//
+//         default:
+//             Toggle4();
+//             counter = 0;
+//             break;
+//     }
+// }
+
+// setInterval("TimeMachine()", 3000);
+
+// var timerTeller = 0;
+// var timer = setInterval(function() {
+//      timerTeller++;
+//      if (timerTeller === 2) {
+//           clearInterval(timer);
+//      }
+// }, 3000);
+
+
+// var timer;
+// function timedText1() {
+//      timer = setInterval(function() {
+//           STRP();
+//      }, 3000);
+// }
+//
+// function timedText2() {
+//      setTimeout(function() {
+//           STRP();
+//      }, 3000);
+//
+//      timer = setInterval(function() {
+//           biennale();
+//      }, 3000);
+// }
+//
+// function timedText3() {
+//      clearTimeout(timedText2);
+//      timer = setInterval(function() {
+//           datum1();
+//      }, 3000);
+// }
+//
+// function timedText4() {
+//      clearTimeout(timedText3);
+//      timer = setInterval(function() {
+//           datum2();
+//      }, 3000);
+// }
+//
+// timedText1();
