@@ -76,7 +76,7 @@ h3 {
      }
 }
 
-@media screen and (max-device-width: 1217px) {
+@media screen and (max-width: 1400px) {
      canvas {
          box-sizing: border-box;
          padding: 0;
@@ -84,7 +84,7 @@ h3 {
          text-align: center;
          max-width: 100%;
          position: relative;
-         left: 10vw;
+         left: -7vw;
 
      }
 }
