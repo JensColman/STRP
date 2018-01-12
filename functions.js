@@ -62,7 +62,7 @@
             this.fps = 40;
 
             this.channel = 0; // 0 = red, 1 = green, 2 = blue
-            this.compOp = 'lighter'; // CompositeOperation = lighter || darker || xor
+            this.compOp = 'darker'; // CompositeOperation = lighter || darker || xor
             this.phase = 0.0;
             this.phaseStep = 0.05; //determines how often we will change channel and amplitude
             this.amplitude = 0.0;
@@ -148,14 +148,14 @@
 
         renderChannels: function(x1, x2, x3) {
             this.context.font = this.font;
-            this.context.fillStyle = "rgb(255,0,0)";
+            this.context.fillStyle = "rgb(255,240,29)";
             this.context.fillText(this.text, x1, this.height / 2);
 
             this.context.globalCompositeOperation = this.compOp;
 
-            this.context.fillStyle = "rgb(0,255,0)";
+            this.context.fillStyle = "rgb(8,182,217)";
             this.context.fillText(this.text, x2, this.height / 2);
-            this.context.fillStyle = "rgb(0,0,255)";
+            this.context.fillStyle = "rgb(0,0,0)";
             this.context.fillText(this.text, x3, this.height / 2);
         },
 
